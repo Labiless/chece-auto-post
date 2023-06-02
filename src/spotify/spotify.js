@@ -36,8 +36,8 @@ export default class Spotify {
     }
 
 
-    getTrackImage = async (trackId) => {
-        const trackData = await getImageData(trackId)
+    getTrackImageCover = async (trackId) => {
+        const trackData = await this.getTrackData(trackId)
         return trackData.album.images[1].url;
     }
 }

@@ -5,12 +5,14 @@ import fs from 'fs';
 
 export default class Google {
 
-    SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly', 
-    "https://www.googleapis.com/auth/drive",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive.appdata",
-    "https://www.googleapis.com/auth/drive.scripts",
-    "https://www.googleapis.com/auth/drive.metadata"
+    SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly',
+        "https://www.googleapis.com/auth/drive",
+        "https://www.googleapis.com/auth/drive.appdata",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/drive.metadata",
+        "https://www.googleapis.com/auth/drive.metadata.readonly",
+        "https://www.googleapis.com/auth/drive.photos.readonly",
+        "https://www.googleapis.com/auth/drive.readonly"
     ];
     SHEET_ID = "1jmWiXb4q8AdBZwCq8gabIpiEykJolEakFrkGk7-aXR4";
     SA_FILENAME = "src/google/chece-388514-cd72aa13fc95.json";
@@ -43,20 +45,26 @@ export default class Google {
         console.log(rows);
     }
 
-    getTemplateImageById = async () => {
+    getTemplateImageLocalPath = async () => {
         const authClient = await this.auth();
         const drive = google.drive({ version: 'v3', auth: authClient });
         const allTemplatesData = await drive.files.list({
             parents: this.DRIVE_FOLDER_ID,
-            includeItemsFromAllDrives : true,
-            supportsAllDrives : true,
+            includeItemsFromAllDrives: true,
+            supportsAllDrives: true,
         })
-        .then(res => res.data.files.filter(el => el.name.includes(this.IMAGE_TEMPLATE_PREFIX)));
+            .then(res => res.data.files.filter(el => el.name.includes(this.IMAGE_TEMPLATE_PREFIX)));
+
         const templateFile = await drive.files.get({
             fileId: allTemplatesData[0].id,
             alt: 'media',
+        }, {
+            responseType: 'arraybuffer',
         })
 
-        let file = await fs.writeFile(`${this.TEMP_FILES_URL}/${"testfile.png"}`, templateFile.data,'binary', () => {console.log("done")})   
+        const filePath = `${this.TEMP_FILES_URL}/${"testfile.png"}`
+        const file = await fs.writeFile(filePath, Buffer.from(templateFile.data), () => {console.log("done")});
+
+        return filePath;
     }
 }
