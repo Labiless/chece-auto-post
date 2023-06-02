@@ -32,7 +32,12 @@ export default class Spotify {
             }
         });
         const data = await response.json();
-        return data.album.images[1].url;
+        return data;
     }
 
+
+    getTrackImage = async (trackId) => {
+        const trackData = await getImageData(trackId)
+        return trackData.album.images[1].url;
+    }
 }
