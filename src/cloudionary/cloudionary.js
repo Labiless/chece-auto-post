@@ -16,9 +16,9 @@ export default class Cloudionary {
 
     }
 
-    uploadImage = async (image64, publicId) => {
+    uploadImage = async (image64, publicId, type) => {
         try {
-            const res = await cloudinary.uploader.upload(image64, { public_id: publicId });
+            const res = await cloudinary.v2.uploader.upload(image64, { public_id: publicId, resource_type: type });
             console.log("impage uploaded to cloudionary " + res.secure_url);
             return res.secure_url;
         } catch (error) {
