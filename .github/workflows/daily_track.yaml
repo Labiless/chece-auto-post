@@ -1,6 +1,9 @@
 name: learn-github-actions
 run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '08 19 * * *'
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
