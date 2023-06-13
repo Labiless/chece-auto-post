@@ -40,7 +40,7 @@ export default class Spotify {
         return {
             artist : data.artists.map(el => el.name).join(", "),
             name :  data.name,
-            imageUrl : data.album.images[1].url,
+            imageUrl : data.album.images[0].url,
             trackUrl : data.external_urls.spotify,
             previewUrl : data.preview_url
         }
