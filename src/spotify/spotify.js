@@ -23,6 +23,11 @@ export default class Spotify {
         return data.access_token;    
     }
 
+    getIdFromUrl = (url) => {
+        // https://open.spotify.com/track/2E0t7djrv8zrshK7hHjs9R?si=DETMqoYHQI2DS3OL4A3BDg
+        return url.split("/")[4].split("?")[0];
+    }
+
     getTrackData = async (trackId) => {
         const accessToken = await this.getAccessToken();
         const response = await fetch(`${this.TRACK_ENDPOINT}${trackId}`,{
@@ -32,12 +37,18 @@ export default class Spotify {
             }
         });
         const data = await response.json();
-        return data;
+        return {
+            artist : data.artists.map(el => el.name).join(", "),
+            name :  data.name,
+            imageUrl : data.album.images[1].url,
+            trackUrl : data.external_urls.spotify,
+            previewUrl : data.preview_url
+        }
     }
 
-
     getTrackImageCover = async (trackId) => {
-        const trackData = await this.getTrackData(trackId)
+        const trackData = await this.getTrackData(trackId);
+        console.log("cover url from spotify ok");
         return trackData.album.images[1].url;
     }
 }

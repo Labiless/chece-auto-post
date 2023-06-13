@@ -18,13 +18,10 @@ export default class Google {
     SA_FILENAME = "src/google/chece-388514-cd72aa13fc95.json";
     DRIVE_FOLDER_ID = ["16YQkdyRGTtZoqSa5MVtoIx7rzvlPIEGR"];
     IMAGE_TEMPLATE_PREFIX = "template_stories";
-    TEMP_FILE_FOLDER_NAME = "temp_file";
-    TEMP_FILES_URL;
     SA_PATH;
 
     constructor() {
         this.SA_PATH = path.join(process.cwd(), this.SA_FILENAME);
-        this.TEMP_FILES_URL = path.join(process.cwd(), this.TEMP_FILE_FOLDER_NAME);
     }
 
     auth = async () => {
@@ -34,18 +31,34 @@ export default class Google {
         });
     }
 
+    getDate = () => {
+        const date = new Date();
+        const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+        const month = date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth();
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
+    compareDate = (d1,d2) => {
+        return d1 === d2;
+    }
+
     readSheet = async () => {
         const authClient = await this.auth();
         const sheets = google.sheets({ version: 'v4', auth: authClient });
         const res = await sheets.spreadsheets.values.get({
             spreadsheetId: this.SHEET_ID,
-            range: "daily_track!A2:F2"
+            range: "daily_track!A2:C90"
         });
-        const rows = res.data.values;
-        console.log(rows);
+        return res.data.values;
     }
 
-    getTemplateImageLocalPath = async () => {
+    getDailyTrack = async () => {
+        const allRows = await this.readSheet();
+        return allRows.filter(el => this.compareDate(this.getDate(), el[1]))[0];
+    }
+
+    downloadImageTemplate = async (templateId) => {
         const authClient = await this.auth();
         const drive = google.drive({ version: 'v3', auth: authClient });
         const allTemplatesData = await drive.files.list({
@@ -53,7 +66,7 @@ export default class Google {
             includeItemsFromAllDrives: true,
             supportsAllDrives: true,
         })
-            .then(res => res.data.files.filter(el => el.name.includes(this.IMAGE_TEMPLATE_PREFIX)));
+        .then(res => res.data.files.filter(el => el.name.includes(`${this.IMAGE_TEMPLATE_PREFIX}_${templateId}`)));
 
         const templateFile = await drive.files.get({
             fileId: allTemplatesData[0].id,
@@ -61,10 +74,6 @@ export default class Google {
         }, {
             responseType: 'arraybuffer',
         })
-
-        const filePath = `${this.TEMP_FILES_URL}/${"testfile.png"}`
-        const file = await fs.writeFile(filePath, Buffer.from(templateFile.data), () => {console.log("done")});
-
-        return filePath;
+        return templateFile.data;
     }
 }
