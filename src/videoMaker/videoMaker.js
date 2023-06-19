@@ -4,6 +4,7 @@ import path from 'path';
 export default class VideoMaker {
 
     VIDEO = {
+        DURATION: 15,
         HEIGHT: 1920,
         WIDTH: 1080,
         BG_COLOR : "#5f7e5f",
@@ -46,7 +47,7 @@ export default class VideoMaker {
         });
 
         const scene = new FFScene();
-        scene.setDuration(10);    
+        scene.setDuration(this.VIDEO.DURATION);    
         scene.setBgColor(this.VIDEO.BG_COLOR);
 
         const background = new FFImage({path: "./static/img/background-fadein.jpg", x: this.VIDEO.WIDTH/2, y: this.VIDEO.HEIGHT/2});
