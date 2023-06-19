@@ -16,4 +16,4 @@ jobs:
         with:
           node-version: '14'
       - run: npm install
-      - run: node index.js
+      - run: npm run start
