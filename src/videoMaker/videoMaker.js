@@ -5,7 +5,12 @@ export default class VideoMaker {
 
     VIDEO = {
         HEIGHT: 1920,
-        WIDTH: 1080
+        WIDTH: 1080,
+        BG_COLOR : "#5f7e5f",
+        ROTATION_LOGO:{
+            LEFT: 758,
+            TOP: 1522
+        }
     }
     creator;
 
@@ -41,11 +46,25 @@ export default class VideoMaker {
         });
 
         const scene = new FFScene();
-        scene.setDuration(10);
+        scene.setDuration(10);    
+        scene.setBgColor(this.VIDEO.BG_COLOR);
+
+        const background = new FFImage({path: "./static/img/background-fadein.jpg", x: this.VIDEO.WIDTH/2, y: this.VIDEO.HEIGHT/2});
+        scene.addChild(background);
 
         const image = new FFImage({ path: img, x: this.VIDEO.WIDTH/2, y: this.VIDEO.HEIGHT/2 });
+        image.addEffect('fadeIn', 1, 0);
         scene.addChild(image);
         scene.addAudio(audio);
+
+        const rotatingLogo = new FFImage({path: "./static/img/rotation_text.png", x: this.VIDEO.ROTATION_LOGO.LEFT, y: this.VIDEO.ROTATION_LOGO.TOP});
+        rotatingLogo.addAnimate({
+            from: { rotate:0, scale: 0.5, alpha: 1 },
+            to: { rotate:100, scale: 0.5, alpha:1 },
+            time: 100,
+            delay: 0,
+        });
+        scene.addChild(rotatingLogo);
 
         this.creator.addChild(scene);
         this.creator.output(outPath);

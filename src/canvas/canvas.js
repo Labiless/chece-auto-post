@@ -7,18 +7,23 @@ export default class Canvas {
         HEIGHT: 1920,
         WIDTH: 1080
     }
+    SPOTIFY_COVER = {
+        SIZE: 750,
+        TOP: 600,
+        LEFT: 170
+    }
     TEXT = {
         MAX_WIDTH : this.STORIES_SIZE.WIDTH/100 * 100,
         LEFT : this.STORIES_SIZE.WIDTH/ 2 + 10,
-        NAME_TOP: 150,
+        NAME_TOP: 300,
         NAME_SIZE: 80,
         ARTIST_SIZE: 60,
         LINE_HEIGHT: 80,
-        FONT_FAMILY: "Heavitas",
-        COLOR: "#577372"
+        FONT_FAMILY: "Beachfly",
+        COLOR: "#e0e1c7"
     }
 
-    FONT_PATH = "static/font/Heavitas.ttf"
+    FONT_PATH = "static/font/Beachfly Free Trial.ttf"
     canvas;
     ctx;
     customFont;
@@ -95,7 +100,7 @@ export default class Canvas {
         const imgTemplate = await loadImage(template);
         const imgCover = await loadImage(spotifyCover);
 
-        this.ctx.drawImage(imgCover, 0, 280, this.STORIES_SIZE.WIDTH , this.STORIES_SIZE.WIDTH );
+        this.ctx.drawImage(imgCover, this.SPOTIFY_COVER.LEFT, this.SPOTIFY_COVER.TOP,  this.SPOTIFY_COVER.SIZE , this.SPOTIFY_COVER.SIZE );
         this.ctx.drawImage(imgTemplate, 0, 0, this.STORIES_SIZE.WIDTH , this.STORIES_SIZE.HEIGHT);
 
         const topNextText = this.writeName(trackName);

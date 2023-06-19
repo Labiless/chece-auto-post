@@ -7,6 +7,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y ffmpeg
 # If you are building your code for production
 # RUN npm ci --omit=dev
 # Bundle app source

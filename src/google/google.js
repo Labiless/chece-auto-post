@@ -2,6 +2,7 @@ import { google } from 'googleapis';
 import docs from 'googleapis/build/src/apis/docs/index.js';
 import path from 'path';
 import fs from 'fs';
+import { getDate } from '../utils.js';
 
 export default class Google {
 
@@ -30,15 +31,6 @@ export default class Google {
             scopes: this.SCOPES
         });
     }
-
-    getDate = () => {
-        const date = new Date();
-        const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-        const month = date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth();
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    }
-
     compareDate = (d1,d2) => {
         return d1 === d2;
     }
@@ -55,7 +47,7 @@ export default class Google {
 
     getDailyTrack = async () => {
         const allRows = await this.readSheet();
-        return allRows.filter(el => this.compareDate(this.getDate(), el[1]))[0];
+        return allRows.filter(el => this.compareDate(getDate(), el[1]))[0];
     }
 
     downloadImageTemplate = async (templateId) => {
