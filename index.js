@@ -4,7 +4,7 @@ import Canvas from "./src/canvas/canvas.js";
 import Cloudionary from "./src/cloudionary/cloudionary.js";
 import FileSystem from "./src/fileSystem/fileSystem.js";
 import DiscordClient from "./src/discord/discrod.js";
-import VideoMaker from "./src/videomaker/videoMaker.js";
+import VideoMaker from "./src/videoMaker/videoMaker.js";
 import path from 'path';
 
 const GoogleSerivce = new Google();
