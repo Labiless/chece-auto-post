@@ -4,7 +4,7 @@ import path from 'path';
 export default class VideoMaker {
 
     VIDEO = {
-        DURATION: 15,
+        DURATION: 14,
         HEIGHT: 1920,
         WIDTH: 1080,
         BG_COLOR : "#5f7e5f",

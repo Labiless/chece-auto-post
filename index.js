@@ -36,7 +36,7 @@ const VideoMakerService = new VideoMaker();
         // upload image to cloudionary
         const videoPublicUrl = await CloudionaryService.uploadImage(path.join(process.cwd(),`temp_file/${spotifyTrackData.name.replaceAll(" ", "_")}.mp4`), spotifyTrackData.name.replaceAll(" ", "_"),"video");
         // discord
-        //await DiscordService.sendDailyTrack(videoPublicUrl, spotifyUrl);
+        await DiscordService.sendDailyTrack(videoPublicUrl, spotifyUrl);
         // clear temp folder
         FileSystemService.cleanTempFolder();
         return true
