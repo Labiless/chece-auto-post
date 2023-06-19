@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: pkill Xvfb
       - uses: openrndr/setup-opengl@v1.1
-      - run: xvfb-run glxinfo
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
