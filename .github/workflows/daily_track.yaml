@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: sudo apt-get install -y xvfb ffmpeg
+      - run: sudo xvfb-run
       - uses: openrndr/setup-opengl@v1.1
       - uses: actions/setup-node@v3
         with:
