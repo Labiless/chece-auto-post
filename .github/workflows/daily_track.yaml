@@ -1,8 +1,8 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: create-daily-track-video
+run-name: creation of daily track video
 on:
   schedule:
-  - cron:  '*/10 * * * *'
+  - cron:  '0 10 * * *'
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
