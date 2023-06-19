@@ -13,11 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: sudo apt-get install -y xvfb ffmpeg
-      - run: sudo xvfb-run --auto-servernum --server-num=1
-      - uses: openrndr/setup-opengl@v1.1
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
       - run: mkdir temp_file
       - run: npm install
-      - run: npm run start
+      - run: sudo xvfb-run --auto-servernum npm run start
