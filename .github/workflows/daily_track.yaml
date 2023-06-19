@@ -9,10 +9,9 @@ on:
   #  - cron:  '* 15 * * *'
 jobs:
   check-bats-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-bionic
     steps:
       - uses: actions/checkout@v3
-      - run: pkill Xvfb
       - uses: openrndr/setup-opengl@v1.1
       - uses: actions/setup-node@v3
         with:
