@@ -7,6 +7,14 @@ export default class Spotify {
     TOKEN_URL = "https://accounts.spotify.com/api/token";
     TRACK_ENDPOINT = "https://api.spotify.com/v1/tracks/";
 
+    PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/playlists/PLAYLIST_ID/tracks"
+    PLAYLIST_ID = "4inbRe01L3JyZLE1cCEag8";
+
+    AUTH_CODE = "AQDu3WKEh2UxY-RC3Jwv5FpzYDS9XT_3AvE082O1KaUJKnWVoIx4E_dv4Ugp5Htw5vqwNLDa_eUo_TUxA7IzF6ErpGIxyydNDdsT84rLSs3X5YTKFQB6HmNQ5iSfrvIJ2uDtCY354wZl4rLgZez08wTNjk2GPk1VdT8OoJMt-uo5VT1R2cQb5jit6yGZ7o60a8WR-db3WUFwdCe9DckiAlMdD3m7FTSXaKu8wZxVbA"
+    REFRESH_TOKEN = "AQDdtuHLt7dXr1G66q8mxjBbTYesaDBJc2r4tNhDx5NTmRpmMVUHk6FoCKPcP5qx-JTRUHfFDoa1sgolVMyS2QzAiVzk5MkdRibdAeY-tKb-rdUasnMFvhj89s71g4-45Ig";
+    REFRESH_ENDPOINT = "https://accounts.spotify.com/api/token";
+    
+
     constructor() {
 
     }
@@ -21,6 +29,22 @@ export default class Spotify {
             })
         const data = await response.json();
         return data.access_token;    
+    }
+
+    calcBase64AuthHeader = () => new Buffer.from(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64');
+
+    getNewAccessToken = async() => {
+        const body = `grant_type=refresh_token&refresh_token=${this.REFRESH_TOKEN}`;
+        const response = await fetch(this.REFRESH_ENDPOINT, {
+            method: "post",
+            headers : {
+                "Authorization" : `Basic ${this.calcBase64AuthHeader()}`,
+                "Content-Type" : "application/x-www-form-urlencoded"
+            },
+            body: body
+        });
+        const data = await response.json();
+        return data.access_token;
     }
 
     getIdFromUrl = (url) => {
@@ -50,5 +74,21 @@ export default class Spotify {
         const trackData = await this.getTrackData(trackId);
         console.log("cover url from spotify ok");
         return trackData.album.images[1].url;
+    }
+
+    addTracksToPLaylist = async(tracks) => {
+        const accessToken = await this.getNewAccessToken();
+        const response = await fetch(this.PLAYLIST_ENDPOINT.replace("PLAYLIST_ID", this.PLAYLIST_ID), {
+            method: "post",
+            headers: {
+                'Authorization' : ` Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                uris: tracks,
+                position: 0
+            })
+        });
+        const data = await response.json();  
+        return data;
     }
 }
