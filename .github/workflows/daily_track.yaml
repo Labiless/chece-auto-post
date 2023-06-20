@@ -2,7 +2,7 @@ name: create-daily-track-video
 run-name: creation of daily track video
 on:
   schedule:
-  - cron:  '0 10 * * *'
+  - cron:  '10 9 * * *'
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
