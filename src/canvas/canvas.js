@@ -57,10 +57,18 @@ export default class Canvas {
     }    
 
     writeArtist = (text, top) => {
+        const maxCharInARow = this.calcMaxCharInARow(this.TEXT.NAME_SIZE/100 * 60, this.TEXT.MAX_WIDTH);
+        const allRows = this.calcNumberOfRow(text,maxCharInARow);
+        
         this.ctx.textAlign = "center";
         this.ctx.fillStyle = this.TEXT.COLOR;
         this.ctx.font = `800 ${this.TEXT.ARTIST_SIZE}px ${this.TEXT.FONT_FAMILY}`
-        this.ctx.fillText(text, this.TEXT.LEFT, (this.TEXT.NAME_TOP +top));
+        
+        let lineHeight = 0;
+        allRows.forEach(el => {
+            this.ctx.fillText(el, this.TEXT.LEFT, (this.TEXT.NAME_TOP + lineHeight +top));
+            lineHeight += this.TEXT.LINE_HEIGHT;
+        })
     }
 
     calcNumberOfRow = (text,maxCharInARow) => {
