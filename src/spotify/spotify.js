@@ -62,7 +62,7 @@ export default class Spotify {
         });
         const data = await response.json();
         return {
-            artist : data.artists.map(el => el.name).join(", "),
+            artist : data.artists.map(el => el.name)[0],
             name :  data.name,
             imageUrl : data.album.images[0].url,
             trackUrl : data.external_urls.spotify,
