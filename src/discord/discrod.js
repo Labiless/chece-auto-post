@@ -3,7 +3,7 @@ import { getDate } from '../utils.js';
 
 export default class DiscordClient {
 
-    TOKEN = "MTExODE0NjU4MTE4Nzc5MzAzNw.GMXAiQ.NvtIb32JbpHB3dR6gS8HWyX5atuOK-_kso-c8c";
+    TOKEN = "MTExODE0NjU4MTE4Nzc5MzAzNw.GPzU1N.h_KlzPH_RxrjmBMEPwtG7h7Pz9s39BR--Ota7Q";
     DAILY_TRACK_THREAD_ID = "1116093627026915458";
     client;
 
