@@ -14,7 +14,6 @@ export default class Spotify {
     REFRESH_TOKEN = "AQDdtuHLt7dXr1G66q8mxjBbTYesaDBJc2r4tNhDx5NTmRpmMVUHk6FoCKPcP5qx-JTRUHfFDoa1sgolVMyS2QzAiVzk5MkdRibdAeY-tKb-rdUasnMFvhj89s71g4-45Ig";
     REFRESH_ENDPOINT = "https://accounts.spotify.com/api/token";
     
-
     constructor() {
 
     }
