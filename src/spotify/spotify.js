@@ -74,6 +74,16 @@ export default class Spotify {
         }
     }
 
+    getLastWeekTracks = async (tracksUrls) => {
+        const newThis = this;
+        const res = [];
+        for(let i=0; i < tracksUrls.length; i++){
+            const trackData = await this.getTrackData(newThis.getIdFromUrl(tracksUrls[i]));
+            res.push(trackData);
+        }
+        return res;
+    }
+
     getTrackImageCover = async (trackId) => {
         const trackData = await this.getTrackData(trackId);
         console.log("cover url from spotify ok");

@@ -13,7 +13,8 @@ export default class FileSystem{
 
     saveTemplate = async (fileData, fileName) => {
         const filePath = `${this.TEMP_FILES_URL}/${fileName}`
-        await fs.writeFile(filePath, Buffer.from(fileData), () => {console.log("template saved on FS")});
+        await fsExtra.outputFile(filePath, Buffer.from(fileData));
+        console.log("image save in temp folder")
         return filePath;
     }
 
