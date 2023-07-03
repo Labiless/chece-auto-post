@@ -11,8 +11,8 @@ export default class FileSystem{
         this.TEMP_FILES_URL = path.join(process.cwd(), this.TEMP_FILE_FOLDER_NAME);
     }
 
-    saveTemplate = async (fileData) => {
-        const filePath = `${this.TEMP_FILES_URL}/${"template.png"}`
+    saveTemplate = async (fileData, fileName) => {
+        const filePath = `${this.TEMP_FILES_URL}/${fileName}`
         await fs.writeFile(filePath, Buffer.from(fileData), () => {console.log("template saved on FS")});
         return filePath;
     }

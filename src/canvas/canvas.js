@@ -13,14 +13,14 @@ export default class Canvas {
         LEFT: 170
     }
     TEXT = {
-        MAX_WIDTH : this.STORIES_SIZE.WIDTH/100 * 100,
+        MAX_WIDTH : this.STORIES_SIZE.WIDTH/100 * 90,
         LEFT : this.STORIES_SIZE.WIDTH/ 2 + 10,
         NAME_TOP: 300,
         NAME_SIZE: 80,
         ARTIST_SIZE: 60,
         LINE_HEIGHT: 80,
         FONT_FAMILY: "Beachfly",
-        COLOR: "#e0e1c7"
+        COLOR: "#ffffff"
     }
 
     FONT_PATH = "static/font/Beachfly Free Trial.ttf"

@@ -2,18 +2,23 @@ import fetch from "node-fetch";
 
 export default class Spotify {
 
+    // account labiles
     CLIENT_ID = "8904648087004f0b977651f628e8a3bc";
     CLIENT_SECRET = "9f8e65b6ef134e27ba53fb2e61699d6a";
     TOKEN_URL = "https://accounts.spotify.com/api/token";
     TRACK_ENDPOINT = "https://api.spotify.com/v1/tracks/";
 
     PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/playlists/PLAYLIST_ID/tracks"
-    PLAYLIST_ID = "4inbRe01L3JyZLE1cCEag8";
+    PLAYLIST_ID = "5FmG1MP1UlyjltZfkR0NhX";
 
-    AUTH_CODE = "AQDu3WKEh2UxY-RC3Jwv5FpzYDS9XT_3AvE082O1KaUJKnWVoIx4E_dv4Ugp5Htw5vqwNLDa_eUo_TUxA7IzF6ErpGIxyydNDdsT84rLSs3X5YTKFQB6HmNQ5iSfrvIJ2uDtCY354wZl4rLgZez08wTNjk2GPk1VdT8OoJMt-uo5VT1R2cQb5jit6yGZ7o60a8WR-db3WUFwdCe9DckiAlMdD3m7FTSXaKu8wZxVbA"
-    REFRESH_TOKEN = "AQDdtuHLt7dXr1G66q8mxjBbTYesaDBJc2r4tNhDx5NTmRpmMVUHk6FoCKPcP5qx-JTRUHfFDoa1sgolVMyS2QzAiVzk5MkdRibdAeY-tKb-rdUasnMFvhj89s71g4-45Ig";
+    // account radiochece
+    CHECE_CLIENT_ID = "c9da1204de1b4b59be703e382eae0a10";
+    CHECE_CLIENT_SERCRET = "aeaad01692884974a24f8191db583f46";
+    AUTH_CODE = "AQBHvn3Zish1aenWpCAEEbkLleAPgcyQU5WCkg4jctfV68XbQPwLODChyyQiUnHFYNdGSHLk9c_4hh7BozY3Yp7rrkCwBOE9vGQ8_Te3BhiH8iNCSPnW2924VjkBsNUE-nDl0LeQaauBDOlco6R9N8Hkn9NfFnPePL_L6Gl6twDyi4-vq7wXU4qffgHyJD0B-O93pvy9xc83W6cgrqnotfPKfPmH2n584NtlnaW5ow";
+    ACCESS_TOKEN = "BQA2qcISO2hXEbg3h0a5390R9Stchz0odBJvSlvZanR4vrZASRjOk21pWa_RZXgQvytQJ_g7xW9w8KeKoOsouElCV2wPg2vxOc4xBjoLlrsw7i4QrGbSQuCNaZTzBYnPu3mvA86T9AlpGEX4IeK9XZoJTe02lsBiD5BYKZ6pyQjIONMiAXArFAUQ0FNaMN3CkY658WlGn_MQ2X6K-8ia0WeJkNxw6mAIQDZX_Dc8n9gjuOUkm_kmhuIoolpdJRk8vOA";
+    REFRESH_TOKEN = "AQCjujlufJzGp6inb2TNWDG2aelVo-J-FBH-n4bNr5u2Di5gtfEjrhaqHBhR_j2tGNcyjEF8Ns-0Aq_4E_Bx0z1ZnZAVTSOK_8x_ZElBvfANdQKcKyqKecclyIDLpyPhiKk";
     REFRESH_ENDPOINT = "https://accounts.spotify.com/api/token";
-    
+
     constructor() {
 
     }
@@ -27,18 +32,18 @@ export default class Spotify {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
         const data = await response.json();
-        return data.access_token;    
+        return data.access_token;
     }
 
-    calcBase64AuthHeader = () => new Buffer.from(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64');
+    calcBase64AuthHeader = (clientId, clientSecret) => new Buffer.from(clientId + ':' + clientSecret).toString('base64');
 
-    getNewAccessToken = async() => {
+    getNewAccessToken = async (clientId, clientSecret) => {
         const body = `grant_type=refresh_token&refresh_token=${this.REFRESH_TOKEN}`;
         const response = await fetch(this.REFRESH_ENDPOINT, {
             method: "post",
-            headers : {
-                "Authorization" : `Basic ${this.calcBase64AuthHeader()}`,
-                "Content-Type" : "application/x-www-form-urlencoded"
+            headers: {
+                "Authorization": `Basic ${this.calcBase64AuthHeader(clientId, clientSecret)}`,
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             body: body
         });
@@ -53,19 +58,19 @@ export default class Spotify {
 
     getTrackData = async (trackId) => {
         const accessToken = await this.getAccessToken();
-        const response = await fetch(`${this.TRACK_ENDPOINT}${trackId}`,{
+        const response = await fetch(`${this.TRACK_ENDPOINT}${trackId}`, {
             method: 'get',
             headers: {
-                'Authorization' : ` Bearer ${accessToken}`
+                'Authorization': ` Bearer ${accessToken}`
             }
         });
         const data = await response.json();
         return {
-            artist : data.artists.map(el => el.name).join(", "),
-            name :  data.name, 
-            imageUrl : data.album.images[0].url,
-            trackUrl : data.external_urls.spotify,
-            previewUrl : data.preview_url
+            artist: data.artists.map(el => el.name).join(", "),
+            name: data.name,
+            imageUrl: data.album.images[0].url,
+            trackUrl: data.external_urls.spotify,
+            previewUrl: data.preview_url
         }
     }
 
@@ -75,19 +80,20 @@ export default class Spotify {
         return trackData.album.images[1].url;
     }
 
-    addTracksToPLaylist = async(tracks) => {
-        const accessToken = await this.getNewAccessToken();
+    addTracksToPLaylist = async (tracks) => {
+        const accessToken = await this.getNewAccessToken(this.CHECE_CLIENT_ID, this.CHECE_CLIENT_SERCRET);
+        const tracksUri = tracks.map(el => `spotify:track:${this.getIdFromUrl(el)}`);
         const response = await fetch(this.PLAYLIST_ENDPOINT.replace("PLAYLIST_ID", this.PLAYLIST_ID), {
             method: "post",
             headers: {
-                'Authorization' : ` Bearer ${accessToken}`
+                'Authorization': ` Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                uris: tracks,
+                uris: tracksUri,
                 position: 0
             })
         });
-        const data = await response.json();  
+        const data = await response.json();
         return data;
     }
 }

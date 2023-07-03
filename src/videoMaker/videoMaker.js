@@ -7,7 +7,7 @@ export default class VideoMaker {
         DURATION: 14,
         HEIGHT: 1920,
         WIDTH: 1080,
-        BG_COLOR : "#5f7e5f",
+        BG_COLOR : "#008ab7",
         ROTATION_LOGO:{
             LEFT: 758,
             TOP: 1522
@@ -49,9 +49,6 @@ export default class VideoMaker {
         const scene = new FFScene();
         scene.setDuration(this.VIDEO.DURATION);    
         scene.setBgColor(this.VIDEO.BG_COLOR);
-
-        const background = new FFImage({path: "./static/img/background-fadein.jpg", x: this.VIDEO.WIDTH/2, y: this.VIDEO.HEIGHT/2});
-        scene.addChild(background);
 
         const image = new FFImage({ path: img, x: this.VIDEO.WIDTH/2, y: this.VIDEO.HEIGHT/2 });
         image.addEffect('fadeIn', 1, 0);

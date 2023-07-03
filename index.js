@@ -15,14 +15,17 @@ const FileSystemService = new FileSystem();
 const DiscordService = new DiscordClient();
 const VideoMakerService = new VideoMaker();
 
+const DRIVE_FOLDER_ID = ["16YQkdyRGTtZoqSa5MVtoIx7rzvlPIEGR"];
+const IMAGE_TEMPLATE_PREFIX = "template_stories";
+
 (async () => {
     // get daily track from google sheet
     await GoogleSerivce.auth();
     const dailyTrack = await GoogleSerivce.getDailyTrack();
     // get tempalte from drive
     const tempalteId = dailyTrack[2];
-    const templateImageData = await GoogleSerivce.downloadImageTemplate(tempalteId);
-    const templateImageUrl = await FileSystemService.saveTemplate(templateImageData);
+    const templateImageData = await GoogleSerivce.downloadImageTemplate(DRIVE_FOLDER_ID,IMAGE_TEMPLATE_PREFIX,tempalteId);
+    const templateImageUrl = await FileSystemService.saveTemplate(templateImageData, "template.png");
     // get data from spotyfy
     const spotifyUrl = dailyTrack[0];
     const spotifyId = SpotifyService.getIdFromUrl(spotifyUrl);

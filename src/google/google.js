@@ -50,15 +50,26 @@ export default class Google {
         return allRows.filter(el => this.compareDate(getDate(), el[1]))[0];
     }
 
-    downloadImageTemplate = async (templateId) => {
+    getLastWeekDailyTracks = async () => {
+        const allRows = await this.readSheet();
+        const todayIndex = allRows.map(el => el[1]).indexOf(getDate());
+        const res = [];
+        const startIndex = todayIndex - 7;
+        for(let i = startIndex; i < todayIndex; i++){
+            res.push(allRows[i][0])
+        }
+        return res;
+    }
+
+    downloadImageTemplate = async (folderId, imagePrefix, templateId) => {
         const authClient = await this.auth();
         const drive = google.drive({ version: 'v3', auth: authClient });
         const allTemplatesData = await drive.files.list({
-            parents: this.DRIVE_FOLDER_ID,
+            parents: folderId,
             includeItemsFromAllDrives: true,
             supportsAllDrives: true,
         })
-        .then(res => res.data.files.filter(el => el.name.includes(`${this.IMAGE_TEMPLATE_PREFIX}_${templateId}`)));
+        .then(res => res.data.files.filter(el => el.name.includes(`${imagePrefix}_${templateId}`)));
 
         const templateFile = await drive.files.get({
             fileId: allTemplatesData[0].id,
