@@ -14,6 +14,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: mkdir temp_file
+      - run: mkdir -p temp_file
       - run: npm install
       - run: sudo xvfb-run --auto-servernum npm run start
