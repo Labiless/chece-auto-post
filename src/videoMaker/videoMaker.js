@@ -7,7 +7,7 @@ export default class VideoMaker {
         DURATION: 14,
         HEIGHT: 1920,
         WIDTH: 1080,
-        BG_COLOR : "#008ab7",
+        BG_COLOR : "#feea00",
         ROTATION_LOGO:{
             LEFT: 758,
             TOP: 1522
