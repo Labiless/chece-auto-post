@@ -40,7 +40,7 @@ export default class Google {
         const sheets = google.sheets({ version: 'v4', auth: authClient });
         const res = await sheets.spreadsheets.values.get({
             spreadsheetId: this.SHEET_ID,
-            range: "daily_track!A2:C90"
+            range: "daily_track!A2:D200"
         });
         return res.data.values;
     }
