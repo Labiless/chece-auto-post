@@ -1,5 +1,6 @@
 name: update_playlist
 run-name: update spotify playlist
+on: workflow_dispatch
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
