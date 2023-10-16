@@ -13,4 +13,4 @@ jobs:
           node-version: '18'
       - run: mkdir temp_file
       - run: npm install
-      - run: sudo xvfb-run --auto-servernum npm run start
+      - run: sudo xvfb-run --auto-servernum npm run playlist
