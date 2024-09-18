@@ -1,5 +1,6 @@
 name: update_playlist
 run-name: update spotify playlist
+on: workflow_dispatch
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
@@ -13,4 +14,4 @@ jobs:
           node-version: '18'
       - run: mkdir temp_file
       - run: npm install
-      - run: sudo xvfb-run --auto-servernum npm run start
+      - run: sudo xvfb-run --auto-servernum npm run playlist
