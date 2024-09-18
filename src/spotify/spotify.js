@@ -3,20 +3,20 @@ import fetch from "node-fetch";
 export default class Spotify {
 
     // account labiles
-    CLIENT_ID = "8904648087004f0b977651f628e8a3bc";
-    CLIENT_SECRET = "9f8e65b6ef134e27ba53fb2e61699d6a";
+    CLIENT_ID = "";
+    CLIENT_SECRET = "";
     TOKEN_URL = "https://accounts.spotify.com/api/token";
     TRACK_ENDPOINT = "https://api.spotify.com/v1/tracks/";
 
     PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/playlists/PLAYLIST_ID/tracks"
-    PLAYLIST_ID = "5FmG1MP1UlyjltZfkR0NhX";
+    PLAYLIST_ID = "";
 
     // account radiochece
-    CHECE_CLIENT_ID = "c9da1204de1b4b59be703e382eae0a10";
-    CHECE_CLIENT_SERCRET = "aeaad01692884974a24f8191db583f46";
-    AUTH_CODE = "AQBHvn3Zish1aenWpCAEEbkLleAPgcyQU5WCkg4jctfV68XbQPwLODChyyQiUnHFYNdGSHLk9c_4hh7BozY3Yp7rrkCwBOE9vGQ8_Te3BhiH8iNCSPnW2924VjkBsNUE-nDl0LeQaauBDOlco6R9N8Hkn9NfFnPePL_L6Gl6twDyi4-vq7wXU4qffgHyJD0B-O93pvy9xc83W6cgrqnotfPKfPmH2n584NtlnaW5ow";
-    ACCESS_TOKEN = "BQA2qcISO2hXEbg3h0a5390R9Stchz0odBJvSlvZanR4vrZASRjOk21pWa_RZXgQvytQJ_g7xW9w8KeKoOsouElCV2wPg2vxOc4xBjoLlrsw7i4QrGbSQuCNaZTzBYnPu3mvA86T9AlpGEX4IeK9XZoJTe02lsBiD5BYKZ6pyQjIONMiAXArFAUQ0FNaMN3CkY658WlGn_MQ2X6K-8ia0WeJkNxw6mAIQDZX_Dc8n9gjuOUkm_kmhuIoolpdJRk8vOA";
-    REFRESH_TOKEN = "AQCjujlufJzGp6inb2TNWDG2aelVo-J-FBH-n4bNr5u2Di5gtfEjrhaqHBhR_j2tGNcyjEF8Ns-0Aq_4E_Bx0z1ZnZAVTSOK_8x_ZElBvfANdQKcKyqKecclyIDLpyPhiKk";
+    CHECE_CLIENT_ID = "";
+    CHECE_CLIENT_SERCRET = "";
+    AUTH_CODE = "---";
+    ACCESS_TOKEN = "-";
+    REFRESH_TOKEN = "----";
     REFRESH_ENDPOINT = "https://accounts.spotify.com/api/token";
 
     constructor() {

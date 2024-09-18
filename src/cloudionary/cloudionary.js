@@ -2,9 +2,9 @@ import * as cloudinary from 'cloudinary'
 
 export default class Cloudionary {
 
-    API_KEY = "535236151691195";
-    API_SECRET = "TH68TQlAn37R76vw5CEGB7golWg";
-    CLOUD_NAME = "dmwtnrrrj";
+    API_KEY = "";
+    API_SECRET = "";
+    CLOUD_NAME = "";
 
     constructor() {
 
