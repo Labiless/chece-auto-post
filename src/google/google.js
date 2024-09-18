@@ -20,6 +20,7 @@ export default class Google {
     DRIVE_FOLDER_ID = ["16YQkdyRGTtZoqSa5MVtoIx7rzvlPIEGR"];
     IMAGE_TEMPLATE_PREFIX = "template_stories";
     SA_PATH;
+    DAILY_TRACKS_RANGE = "daily_track!A2:D1000";
 
     constructor() {
         this.SA_PATH = path.join(process.cwd(), this.SA_FILENAME);
@@ -35,23 +36,23 @@ export default class Google {
         return d1 === d2;
     }
 
-    readSheet = async () => {
+    readSheet = async (range) => {
         const authClient = await this.auth();
         const sheets = google.sheets({ version: 'v4', auth: authClient });
         const res = await sheets.spreadsheets.values.get({
             spreadsheetId: this.SHEET_ID,
-            range: "daily_track!A2:D200"
+            range: range
         });
         return res.data.values;
     }
 
     getDailyTrack = async () => {
-        const allRows = await this.readSheet();
+        const allRows = await this.readSheet(this.DAILY_TRACKS_RANGE);
         return allRows.filter(el => this.compareDate(getDate(), el[1]))[0];
     }
 
     getLastWeekDailyTracks = async () => {
-        const allRows = await this.readSheet();
+        const allRows = await this.readSheet(this.DAILY_TRACKS_RANGE);
         const todayIndex = allRows.map(el => el[1]).indexOf(getDate());
         const res = [];
         const startIndex = todayIndex - 7;

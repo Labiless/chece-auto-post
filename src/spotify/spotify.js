@@ -53,7 +53,11 @@ export default class Spotify {
 
     getIdFromUrl = (url) => {
         // https://open.spotify.com/track/2E0t7djrv8zrshK7hHjs9R?si=DETMqoYHQI2DS3OL4A3BDg
-        return url.split("/")[4].split("?")[0];
+        try {
+            return url.split("/")[4].split("?")[0];
+        } catch (error) {
+            return "";
+        }
     }
 
     getTrackData = async (trackId) => {
